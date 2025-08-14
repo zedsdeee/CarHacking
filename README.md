@@ -13,4 +13,3 @@ The staff handed me a small CANBUS kit used for their car hacking CTF. At that p
 The concept immediately caught my attention. The idea that vehicles could be vulnerable to digital exploitation was just you know fascinating. 
 
 That encounter 'motorvated' me to dive deeper into the world of car hacking kinda stuff.
-# CarHacking
