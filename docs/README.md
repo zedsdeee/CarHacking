@@ -2,7 +2,7 @@
 
 Book: https://archive.org/details/the-car-hackers-handbook
 
-Since I dont own a car, I will setup a virtual CAN interface lab on my linux machine with my arduino, raspberry pi, and CAN sheild/MCP2515 CAN module.
+Since I dont own a car, I will setup a virtual CAN interface lab on my linux machine with my arduino, raspberry pi, and CAN shield/MCP2515 CAN module.
 
 I guess the prerequisite knowledge I should have before diving into car hacking is something like programming skills, linux, network bacis, embedded systems, and most importantly automotive concepts.
 
@@ -63,5 +63,6 @@ candump vcan0
 ```
 
 This simulates a CAN network, and I can write scripts to generate traffic, replay messages.
+
 
 
