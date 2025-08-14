@@ -1,4 +1,6 @@
-# Getting started with Car Hacking 
+# Stage 1: Getting started with Car Hacking 
+
+**Goal**: Understand what automotive networks are, what ECUs do, how the CAN bus works, and how to safely interact with them.
 
 Book: https://archive.org/details/the-car-hackers-handbook
 
@@ -157,5 +159,6 @@ Example: Exploiting an insecure API in the manufacturer’s mobile app to send r
 - Third-party dongles → Vulnerable insurance trackers or fleet devices
 
 Example: Compromising a manufacturer’s update server to push malicious ECU firmware.
+
 
 
