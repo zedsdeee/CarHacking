@@ -26,7 +26,7 @@ Instead of each ECU being directly wired to every other ECU, CAN Bus allows them
 
 ## 2. CAN
 
-CAN bus stands for **Controller Area Network bus**, and it’s basically a communication system for vehicles and other embedded systems.
+CAN bus stands for **Controller Area Network bus**, and it’s basically a communication system for vehicles and other embedded systems. The most common, high reliability, up to 1 Mbps.
 
 ### Why Bus topology?
 
@@ -36,7 +36,14 @@ CAN bus is a **Bus topology** which means All devices are connected to the same 
 
 The CAN communication is **message-based protocol**: Each ECU sends messages with an **identifier (ID)**, not directly to another ECU. Other ECUs decide if the message is relevant to them. Something looks like this: **ID + DATA**.
 
-PLus, CAN bus is **Half-Duplex**, meaning devices can either send or receive at any given time, but not both simultaneously. CAN uses a single pair of wires (CAN_H and CAN_L) for communication. Because it’s a shared bus, only one ECU can “talk” at a time, and all others listen. WHY? Because vhicles don’t need simultaneous two-way communication on the same line.
+e.g.)
+```
+ID: 0x123  Payload: 11 22 33 44 55 66 77 88
+```
+
+Plus, CAN bus is **Half-Duplex**, meaning devices can either send or receive at any given time, but not both simultaneously. CAN uses a single pair of wires (CAN_H and CAN_L) for communication. 
+
+Because it’s a shared bus, only one ECU can “talk” at a time, and all others listen. WHY? Because vhicles don’t need simultaneous two-way communication on the same line.
 
 ### Why Differential signaling?
 
