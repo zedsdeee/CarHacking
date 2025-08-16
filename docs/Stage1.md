@@ -1,4 +1,4 @@
-# Stage 1: Getting started with Car Hacking  test
+# Stage 1: Getting started with Car Hacking
 
 **Goal**: Understand what automotive networks are, what ECUs do, how the CAN bus works, and how to safely interact with them.
 
@@ -119,6 +119,12 @@ ISO-TP allows to split large messages into multiple CAN frames and reassemble th
 The most common use of ISO-TP is for diagnostics and KWP messages (an alternative protocol to CAN), but it can also be used any time large amounts of data need to be transferred over CAN.
 
 <img src="/images/isotp.png" width="500">
+
+### CANopen Protocol
+
+Another way to extend the CAN protocol is the CANopen protocol. CANopen breaks down the 11-bit identifier to a 4-bit function code
+and 7-bit node ID—a combination known as a communication object identifier
+(COB-ID).
 
 **ISO-TP defines different frame types:**
 
