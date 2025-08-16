@@ -10,7 +10,7 @@ I guess the prerequisite knowledge I should have before diving into car hacking 
 
 JATG/UART? Maybe, unless doing firmware reverse engineering of actual ECUs but we'll see.
 
-# Funcations 
+# Fundations 
 
 ## 1. ECUs
 
@@ -69,7 +69,7 @@ But what if it is a normal signal? lets say 0V for 0 and 5V for 1. Suppose noise
 
 So, CAN doesn’t rely on the absolute voltage of a single wire. It uses the voltage difference between CAN_H and CAN_L (CAN_H - CAN_L). And suppose noise occurs (like from a nearby motor or magnetic induction), and the 0 V line spikes to 4 V here again. Because both wires are next to each other, both levels will be affected with the same amount. so it still gives a 2V.
 
-###  CAN bus data frame
+###  CAN bus data frame/ packet layout
 
 CAN bus is asynchronous communication, which means devices don’t share a global clock signal.
 
@@ -77,12 +77,12 @@ If one device is sending data at a speed of 1Mbit/s and the other is 5Mbit/s, th
 
 <img src="/images/Standard-format-of-CAN-data-frame.jpg" width="500">
 
-**1. Two CAN Frame Types**
+**Two CAN Frame Types**
 
 - **Standard Frame (CAN 2.0A)** → 11-bit identifier (CAN ID)
 - **Extended Frame (CAN 2.0B)** → 29-bit identifier (used in some modern vehicles)
 
-**2. Standard CAN Data Frame Structure**
+**Standard CAN Data Frame**
 
 ```
 | Start of Frame | Identifier | Control | Data | CRC | ACK | End of Frame |
@@ -100,6 +100,34 @@ If one device is sending data at a speed of 1Mbit/s and the other is 5Mbit/s, th
 | **ACK**             | 2                       | Acknowledge from receiving nodes                                |
 | **EOF**             | 7                       | Marks the end of the frame                                      |
 
+
+- ID: It is a broadcast message that identifies the ID, if two CAN packets are sent along the bus at the same time, the one with the lower arbitration ID wins.
+- IDE (Identifier extension): theis bits is always 0 for standard CAN
+- DLC (Data length code): the is the size of the sata, which ranges from 0to 8 bytes.
+- Data: thie is the data itself.
+
+Because CAN bus packets are broadcast, all controllers on the same network see every packet, kind of like UDP broadcast on Ethernet networks.
+
+The packets don’t carry information about which controller (or attacker) sent what. Because any device can see and transmit packets, it’s trivial for any device on the bus to simulate any other device.
+
+### ISO-TP protocol
+
+Standard CAN messages are limited to 8 bytes per frame. Many important commands, firmware updates, or diagnostic requests exceed 8 bytes.
+
+ISO-TP allows to split large messages into multiple CAN frames and reassemble them correctly (support up to 4095 bytes). Without understanding ISO-TP, might misinterpret messages or fail to inject commands properly.
+
+The most common use of ISO-TP is for diagnostics and KWP messages (an alternative protocol to CAN), but it can also be used any time large amounts of data need to be transferred over CAN.
+
+<img src="/images/isotp.png" width="500">
+
+**ISO-TP defines different frame types:**
+
+- Single Frame (SF, 0x0): Unsegmented message which can be fit into single frame.
+- First Frame (FF, 0x1): First frame of segmented message.
+- Consecutive Frame (CF, 0x2): Frame followed by the first frame are consecutive frame.
+- Flow Control Frame (FC, 0x3): When first frame is received a flow control frame is send, which contain status flow, block size and separation time.
+
+https://eteo.tistory.com/593
 
 ## 3. OBD-II 
 
@@ -120,16 +148,6 @@ It is 16-pin trapezoid-shaped connector. Each pin has a specific function like p
 - Monitor live engine data (RPM, temperature, fuel trim, etc.).
 - Sniff CAN messages for reverse engineering.
 - Perform certain control actions (if you have the right access).
-
-# Threat Models
-
-| External  | Vehicle |     Internal     |
-|-----------|---------|------------------|
-| cellular  |         | Infotainment     |
-| wifi      |         | USB              |
-| Bluetooth |         | OBD-II Connector |
-| TPMS      |         | CAN bus Splicing |
-| KES       |         |                  |
 
 # Attack Surfaces
 
@@ -169,7 +187,3 @@ Example: Exploiting an insecure API in the manufacturer’s mobile app to send r
 - Third-party dongles → Vulnerable insurance trackers or fleet devices
 
 Example: Compromising a manufacturer’s update server to push malicious ECU firmware.
-
-
-
-
