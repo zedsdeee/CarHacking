@@ -26,9 +26,9 @@ Instead of each ECU being directly wired to every other ECU, CAN Bus allows them
 
 ## 2. CAN
 
-CAN bus stands for **Controller Area Network bus**, and it’s basically a communication system for vehicles and other embedded systems. The most common, high reliability, up to 1 Mbps.
+CAN bus stands for **Controller Area Network** bus, and it’s basically a communication system for vehicles and other embedded systems. The most common, high reliability, up to 1 Mbps.
 
-### Why Bus topology?
+### Bus topology
 
 CAN bus is a **Bus topology** which means All devices are connected to the same two-wire bus (CAN_H and CAN_L lines). 
 
@@ -45,7 +45,7 @@ Plus, CAN bus is **Half-Duplex**, meaning devices can either send or receive at 
 
 Because it’s a shared bus, only one ECU can “talk” at a time, and all others listen. WHY? Because vhicles don’t need simultaneous two-way communication on the same line.
 
-### Why Differential signaling?
+### Differential signaling
 
 So basically, CAN bus has two wires: **CAN_H (High)** and **CAN_L (Low)**. In digital terms, usually, 0 and 1 are represented by a high or low voltage.
 
@@ -69,7 +69,7 @@ But what if it is a normal signal? lets say 0V for 0 and 5V for 1. Suppose noise
 
 So, CAN doesn’t rely on the absolute voltage of a single wire. It uses the voltage difference between CAN_H and CAN_L (CAN_H - CAN_L). And suppose noise occurs (like from a nearby motor or magnetic induction), and the 0 V line spikes to 4 V here again. Because both wires are next to each other, both levels will be affected with the same amount. so it still gives a 2V.
 
-###  CAN bus data frame/ packet layout
+### CAN bus data frame/packet layout
 
 CAN bus is asynchronous communication, which means devices don’t share a global clock signal.
 
@@ -120,12 +120,6 @@ The most common use of ISO-TP is for diagnostics and KWP messages (an alternativ
 
 <img src="/images/isotp.png" width="500">
 
-### CANopen Protocol
-
-Another way to extend the CAN protocol is the CANopen protocol. CANopen breaks down the 11-bit identifier to a 4-bit function code
-and 7-bit node ID—a combination known as a communication object identifier
-(COB-ID).
-
 **ISO-TP defines different frame types:**
 
 - Single Frame (SF, 0x0): Unsegmented message which can be fit into single frame.
@@ -134,6 +128,55 @@ and 7-bit node ID—a combination known as a communication object identifier
 - Flow Control Frame (FC, 0x3): When first frame is received a flow control frame is send, which contain status flow, block size and separation time.
 
 https://eteo.tistory.com/593
+
+### CANopen Protocol
+
+Another way to extend the CAN protocol is the CANopen protocol. CANopen breaks down the 11-bit identifier to a 4-bit function code and 7-bit node ID—a combination known as a communication object identifier (COB-ID).
+
+### GMLAN Bus 
+
+<img src="/images/gmlan.jpeg" width="500">
+
+GMLAN stands for General Motors Local Area Network. GMLAN is basically GM’s version of CAN, with high-speed and single-wire variants and heavy use of ISO-TP for diagnostics
+
+### The SAE J1850 protocol 
+
+The SAE J1850 protocol is a vehicle bus standard used mainly in North American cars (especially GM, Ford, and Chrysler) in the 1990s and early 2000s.
+
+There are two types ofJ1850 protocols: Variable Pulse Width used by GM and Pulse Width Modulation used by Ford.
+
+| Variant | Name                   | Speed     | Use / Notes   |
+| ------- | ---------------------- | --------- | ------------- |
+| VPW     | Variable Pulse Width   | 10.4 kbps | GM vehicles   |
+| PWM     | Pulse Width Modulation | 41.6 kbps | Ford vehicles |
+
+Single-wire bus (unlike CAN, which is two wires).
+Message-based protocol – ECUs send frames with identifiers.
+
+Timing-based encoding:
+
+VPW = 10.4 kbps, uses pulse width to encode 0 and 1.
+PWM = 41.6 kbps, faster, uses pulse width modulation.
+
+Half-duplex communication – only one ECU transmits at a time.
+
+### The Keyword Protocol and ISO 9141-2
+
+Keyword protocol 2000 (ISO 14230), also known as KWP2000. Diagnostic communication between a scan tool and a vehicle ECU. It uses pin 7 and is common in US vehicles made after 2003.
+
+In ISO 9141-2 ot K line, is a variation of KWP2000 seen most often in European vehicles. K-line is a UART protocol similar to serial. 
+
+KWP2000 = “how to talk to ECUs” (diagnostic commands on top of ISO 9141-2).
+ISO 9141-2 = “how to send bits physically” (single K-line, low speed).
+
+
+### The local Interconnect Network Protocol
+
+### The MOST protocol
+
+### The FlexRay Bus
+
+### Automotive Ethernet 
 
 ## 3. OBD-II 
 
