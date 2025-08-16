@@ -101,9 +101,12 @@ If one device is sending data at a speed of 1Mbit/s and the other is 5Mbit/s, th
 | **EOF**             | 7                       | Marks the end of the frame                                      |
 
 
-## 3. OBD-II port
+## 3. OBD-II 
 
 OBD-II stands for On-Board Diagnostics version 2. It’s a standardized interface that can access a car’s diagnostic information, emissions data, and in many cases, raw CAN messages.
+
+It's also known as the **DLC (Diagnostic link connector)**, which communicates with the vehicle's internal network. 
+
 
 <img src="/images/obd2port.jpg" width="500">
 
@@ -166,6 +169,7 @@ Example: Exploiting an insecure API in the manufacturer’s mobile app to send r
 - Third-party dongles → Vulnerable insurance trackers or fleet devices
 
 Example: Compromising a manufacturer’s update server to push malicious ECU firmware.
+
 
 
 
